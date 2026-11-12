@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_order_audit_log_manager,pos.order.audit.log manager,model_pos_order_audit_log,group_pos_store_manager,1,0,0,0
+access_pos_order_audit_log_system,pos.order.audit.log system,model_pos_order_audit_log,base.group_system,1,0,0,0
+access_product_template_store_manager,product.template store manager,product.model_product_template,group_pos_store_manager,1,1,1,0
+access_product_product_store_manager,product.product store manager,product.model_product_product,group_pos_store_manager,1,1,1,0

@@ -1,0 +1,24 @@
+<odoo>
+
+    <record id="view_partner_form_person_profile" model="ir.ui.view">
+        <field name="name">res.partner.form.person.profile</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Perfil Personal" invisible="is_company">
+
+                    <group>
+                        <field name="job_title"/>
+                        <field name="birthday" widget="date" options="{'format': 'MM-DD'}"/>
+                        <field name="role_id"/>
+                    </group>
+
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

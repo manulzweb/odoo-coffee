@@ -1,0 +1,187 @@
+<odoo>
+
+    <!-- ===================================================== -->
+    <!-- TIPO DE CLIENTE -->
+    <!-- ===================================================== -->
+
+    <record id="view_company_client_type_list" model="ir.ui.view">
+        <field name="name">company.client.type.list</field>
+        <field name="model">company.client.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_company_client_type_form" model="ir.ui.view">
+        <field name="name">company.client.type.form</field>
+        <field name="model">company.client.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_company_client_type" model="ir.actions.act_window">
+        <field name="name">Tipo de Cliente</field>
+        <field name="res_model">company.client.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- TAMAÑO DE EMPRESA -->
+    <!-- ===================================================== -->
+
+    <record id="view_company_size_list" model="ir.ui.view">
+        <field name="name">company.size.list</field>
+        <field name="model">company.size</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_company_size_form" model="ir.ui.view">
+        <field name="name">company.size.form</field>
+        <field name="model">company.size</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_company_size" model="ir.actions.act_window">
+        <field name="name">Tamaño de Empresa</field>
+        <field name="res_model">company.size</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- SECTOR SIREN -->
+    <!-- ===================================================== -->
+
+    <record id="view_company_sector_siren_list" model="ir.ui.view">
+        <field name="name">company.sector.siren.list</field>
+        <field name="model">company.sector.siren</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_company_sector_siren_form" model="ir.ui.view">
+        <field name="name">company.sector.siren.form</field>
+        <field name="model">company.sector.siren</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_company_sector_siren" model="ir.actions.act_window">
+        <field name="name">Sector Siren</field>
+        <field name="res_model">company.sector.siren</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- MACRO SECTOR -->
+    <!-- ===================================================== -->
+
+    <record id="view_company_macro_sector_list" model="ir.ui.view">
+        <field name="name">company.macro.sector.list</field>
+        <field name="model">company.macro.sector</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_company_macro_sector_form" model="ir.ui.view">
+        <field name="name">company.macro.sector.form</field>
+        <field name="model">company.macro.sector</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_company_macro_sector" model="ir.actions.act_window">
+        <field name="name">Macro Sector</field>
+        <field name="res_model">company.macro.sector</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- PERFIL DE CONSUMO -->
+    <!-- ===================================================== -->
+
+    <record id="view_company_consumption_profile_list" model="ir.ui.view">
+        <field name="name">company.consumption.profile.list</field>
+        <field name="model">company.consumption.profile</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_company_consumption_profile_form" model="ir.ui.view">
+        <field name="name">company.consumption.profile.form</field>
+        <field name="model">company.consumption.profile</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_company_consumption_profile" model="ir.actions.act_window">
+        <field name="name">Perfil de Consumo</field>
+        <field name="res_model">company.consumption.profile</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,16 @@
+<odoo>
+    <!-- Menú raíz bajo Contactos -->
+    <menuitem id="menu_contact_role_root" 
+        name="Perfil Personas" 
+        parent="contacts.menu_contacts" 
+        sequence="20"
+        groups="base.group_system"/>
+
+    <!-- Menú Administrar Roles -->
+    <menuitem id="menu_contact_role_manage" 
+        name="Administrar Roles" 
+        parent="menu_contact_role_root" 
+        action="action_contact_role" 
+        groups="base.group_system"/>
+
+</odoo>

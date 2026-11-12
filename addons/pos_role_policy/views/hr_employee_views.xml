@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_pos_role" model="ir.ui.view">
+        <field name="name">hr.employee.form.pos.role</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="pin" position="before">
+                <field name="pos_role" widget="radio" options="{'horizontal': true}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_employee_tree_pos_role" model="ir.ui.view">
+        <field name="name">hr.employee.list.pos.role</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="pos_role" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

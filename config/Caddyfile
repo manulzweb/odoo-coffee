@@ -1,0 +1,33 @@
+# Hosts de los tenants, separados por espacio (variable TENANT_HOSTS en .env)
+#   Local:       http://pizzeria.localhost,http://sushi.localhost
+#   Produccion:  pizzeria.midominio.co,sushi.midominio.co   (HTTPS automatico)
+{$TENANT_HOSTS} {
+	encode zstd gzip
+
+	# La raiz va directo al POS
+	@root path /
+	redir @root /pos/ui?config_id=1 302
+
+	# Backend de Odoo: solo con la cookie que entrega la ruta secreta /admin-<ADMIN_KEY>
+	@adminlogin path /admin-{$ADMIN_KEY}
+	route @adminlogin {
+		header Set-Cookie "adm={$ADMIN_KEY}; Path=/; HttpOnly; SameSite=Lax; Max-Age=28800"
+		header Location /odoo
+		respond 302
+	}
+	@backend {
+		path /odoo /odoo/* /web/database/*
+		not header_regexp adm Cookie adm={$ADMIN_KEY}
+	}
+	redir @backend /pos/ui?config_id=1 302
+
+	# Sincronizacion en tiempo real (meseros <-> caja <-> cocina)
+	@websocket path /websocket*
+	reverse_proxy @websocket saas-odoo:8072
+
+	reverse_proxy saas-odoo:8069
+
+	request_body {
+		max_size 100MB
+	}
+}

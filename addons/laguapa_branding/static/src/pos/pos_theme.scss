@@ -1,0 +1,60 @@
+// POS de caja y meseros con la marca La Guapa
+:root {
+    --lg-green: #005e3c;
+    --lg-green-dark: #00432b;
+    --lg-mint: #bbfee8;
+}
+
+// ---------- Login de empleados (pos_hr) ----------
+.login-overlay.o_attendance_background {
+    background: var(--lg-green) !important;
+    color: var(--lg-mint);
+
+    .screen-login-timer,
+    .timer-hours,
+    .timer-date-container {
+        color: var(--lg-mint) !important;
+    }
+    .screen-login-logo img {
+        border-radius: 14px;
+    }
+    .open-register-btn {
+        background: var(--lg-mint);
+        border-color: var(--lg-mint);
+        color: var(--lg-green);
+        font-weight: 700;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+
+        &:hover,
+        &:active {
+            background: #fff;
+            border-color: #fff;
+            color: var(--lg-green);
+        }
+    }
+    // "Backend": el backend esta cerrado para el personal del restaurante
+    .select-logout {
+        display: none !important;
+    }
+}
+
+// ---------- Barra superior ----------
+// Logo de La Guapa en vez del de Odoo
+.pos .pos-topheader .pos-logo {
+    content: url("/web/binary/company_logo");
+    height: 42px;
+    width: auto;
+    border-radius: 8px;
+}
+
+// ---------- Botones principales ----------
+.pos .btn-primary {
+    --bs-btn-bg: var(--lg-green);
+    --bs-btn-border-color: var(--lg-green);
+    --bs-btn-hover-bg: var(--lg-green-dark);
+    --bs-btn-hover-border-color: var(--lg-green-dark);
+    --bs-btn-active-bg: var(--lg-green-dark);
+    --bs-btn-active-border-color: var(--lg-green-dark);
+    --bs-btn-disabled-bg: var(--lg-green);
+    --bs-btn-disabled-border-color: var(--lg-green);
+}

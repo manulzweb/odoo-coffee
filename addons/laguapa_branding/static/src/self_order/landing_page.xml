@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="laguapa_branding.LandingPage" t-inherit="pos_self_order.LandingPage" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_pos_landing_footer')]" position="before">
+            <div t-if="!selfOrder.config._self_ordering_image_home_ids.length" class="lg-hero" t-on-click="start">
+                <img class="lg-hero-logo" src="/web/binary/company_logo" alt="La Guapa"/>
+                <span class="lg-hero-kicker">Barranquilla · Art based bar &amp; restaurant</span>
+                <span t-if="selfOrder.currentTable" class="lg-hero-table">
+                    <i class="fa fa-cutlery" aria-hidden="true"/> Mesa <t t-esc="selfOrder.currentTable.table_number"/>
+                </span>
+                <p class="lg-hero-note">
+                    <t t-if="selfOrder.config.self_ordering_mode === 'consultation'">Mira nuestra carta. Para pedir, llama a tu mesero.</t>
+                    <t t-elif="selfOrder.config.self_ordering_pay_after === 'meal'">Pide desde tu celular y paga al final con tu mesero.</t>
+                    <t t-else="">Pide y paga desde tu celular.</t>
+                </p>
+            </div>
+        </xpath>
+    </t>
+</templates>

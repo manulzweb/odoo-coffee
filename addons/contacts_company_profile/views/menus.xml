@@ -1,0 +1,45 @@
+<odoo>
+
+    <!-- Menú raíz bajo Contactos -->
+    <menuitem id="menu_company_profile_root"
+              name="Perfil Empresarial"
+              parent="contacts.menu_contacts"
+              sequence="50"
+              groups="base.group_system"/>
+
+    <!-- Menú Configurar Tipo de Cliente -->
+    <menuitem id="menu_client_type"
+          name="Tipo de Cliente"
+          parent="menu_company_profile_root"
+          action="action_company_client_type"
+          groups="base.group_system"/>
+
+    <!-- Menú Configurar Tamaño Compañia -->
+    <menuitem id="menu_client_size"
+          name="Tamo de compañía"
+          parent="menu_company_profile_root"
+          action="action_company_size"
+          groups="base.group_system"/>
+
+    <!-- Menú Configurar Sector Siren -->
+    <menuitem id="menu_client_sector_siren"
+          name="Sectores Siren"
+          parent="menu_company_profile_root"
+          action="action_company_sector_siren"
+          groups="base.group_system"/>
+
+    <!-- Menú Configurar Macro Sector -->
+    <menuitem id="menu_client_macro_sector"
+          name="Macro sectores"
+          parent="menu_company_profile_root"
+          action="action_company_macro_sector"
+          groups="base.group_system"/>
+
+    <!-- Menú Configurar Perfil consumo -->
+    <menuitem id="menu_client_consumption_profile"
+          name="Perfiles de consumo"
+          parent="menu_company_profile_root"
+          action="action_company_consumption_profile"
+          groups="base.group_system"/>
+
+</odoo>

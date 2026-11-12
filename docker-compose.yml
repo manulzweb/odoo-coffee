@@ -1,0 +1,116 @@
+
+services:
+  sass-data-base:
+    image: ${POSTGRES_IMAGE}
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    volumes:
+      - saas-odoo-db-data:/var/lib/postgresql/data
+
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT}:5432"
+
+    networks:
+      - saas-network
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"
+      interval: ${POSTGRES_HEALTH_INTERVAL}
+      timeout: ${POSTGRES_HEALTH_TIMEOUT}
+      retries: ${POSTGRES_HEALTH_RETRIES}
+      start_period: ${POSTGRES_HEALTH_START_PERIOD}
+
+    deploy:
+      resources:
+        limits:
+          cpus: "${POSTGRES_CPU_LIMIT}"
+          memory: ${POSTGRES_MEMORY_LIMIT}
+
+    logging:
+      driver: json-file
+      options:
+        max-size: ${LOG_MAX_SIZE}
+        max-file: "${LOG_MAX_FILES}"
+
+  saas-odoo:
+    image: ${ODOO_IMAGE}
+    container_name: ${ODOO_CONTAINER_NAME}
+    restart: unless-stopped
+
+    depends_on:
+      sass-data-base:
+        condition: service_healthy
+        restart: true
+
+    environment:
+      HOST: sass-data-base
+      PORT: 5432
+      USER: ${POSTGRES_USER}
+      PASSWORD: ${POSTGRES_PASSWORD}
+
+    # Odoo ya no se expone: todo el trafico entra por Caddy (80/443)
+    expose:
+      - "8069"
+      - "8072"
+
+    volumes:
+      - saas-odoo-web-data:/var/lib/odoo
+      - ./addons:/mnt/extra-addons
+      - ./config/odoo.conf:/etc/odoo/odoo.conf:ro
+
+    networks:
+      - saas-network
+
+    deploy:
+      resources:
+        limits:
+          cpus: "${ODOO_CPU_LIMIT}"
+          memory: ${ODOO_MEMORY_LIMIT}
+
+    logging:
+      driver: json-file
+      options:
+        max-size: ${LOG_MAX_SIZE}
+        max-file: "${LOG_MAX_FILES}"
+
+  caddy:
+    image: caddy:2
+    container_name: saas-caddy
+    restart: unless-stopped
+    depends_on:
+      - saas-odoo
+    environment:
+      TENANT_HOSTS: ${TENANT_HOSTS}
+      ADMIN_KEY: ${ADMIN_KEY}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./config/Caddyfile:/etc/caddy/Caddyfile:ro
+      - saas-caddy-data:/data
+      - saas-caddy-config:/config
+    networks:
+      - saas-network
+    logging:
+      driver: json-file
+      options:
+        max-size: ${LOG_MAX_SIZE}
+        max-file: "${LOG_MAX_FILES}"
+
+networks:
+  saas-network:
+    driver: bridge
+
+volumes:
+  saas-caddy-data:
+  saas-caddy-config:
+  saas-odoo-web-data:
+  saas-odoo-db-data:

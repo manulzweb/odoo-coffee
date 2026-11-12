@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- TODO-VERIFICAR: id de la vista product.product_template_form_view y que
+         exista la pagina name="general_information" en Odoo 18. Si el xpath no
+         coincide, la instalacion falla: ajustar tras abrir la vista real. -->
+    <record id="product_template_form_view_cafeteria" model="ir.ui.view">
+        <field name="name">product.template.form.pos.order.integrity</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_information']" position="inside">
+                <group name="pos_group" string="Cafetería">
+                    <field name="pos_sale_mode"/>
+                    <field name="pos_units_per_bag" invisible="pos_sale_mode != 'bag'"/>
+                    <field name="pos_cost_known"
+                           groups="pos_order_integrity.group_pos_store_manager,base.group_system"/>
+                    <field name="pos_manual_cost" invisible="not pos_cost_known"
+                           groups="pos_order_integrity.group_pos_store_manager,base.group_system"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

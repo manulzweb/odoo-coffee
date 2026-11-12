@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Login: sin "Powered by Odoo" ni "Manage Databases"; titulo de la pestana -->
+    <template id="login_layout_laguapa" inherit_id="web.login_layout">
+        <xpath expr="//div[hasclass('border-top')]" position="replace"/>
+        <xpath expr="//t[@t-call='web.frontend_layout']" position="inside">
+            <t t-set="title" t-value="'La Guapa'"/>
+        </xpath>
+    </template>
+
+    <!-- POS: titulo de la pestana -->
+    <template id="pos_index_laguapa" inherit_id="point_of_sale.index">
+        <xpath expr="//title" position="replace">
+            <title>La Guapa</title>
+        </xpath>
+    </template>
+
+    <!-- Autopedido (QR): titulo, color del navegador movil y tipografias -->
+    <template id="self_order_index_laguapa" inherit_id="pos_self_order.index">
+        <xpath expr="//head/title" position="replace">
+            <title>La Guapa · Pide desde tu mesa</title>
+            <meta name="theme-color" content="#005e3c"/>
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Inter:wght@400;500;600;700&amp;display=swap"/>
+        </xpath>
+    </template>
+</odoo>

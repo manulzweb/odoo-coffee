@@ -1,0 +1,30 @@
+<odoo>
+
+    <record id="view_partner_form_company_profile" model="ir.ui.view">
+        <field name="name">res.partner.form.company.profile</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Perfil Empresarial" invisible="not is_company">
+                    <group>
+                        <group>
+                            <field name="client_type_id"/>
+                            <field name="company_size_id"/>
+                            <field name="employee_qty"/>
+                        </group>
+                        <group>
+                            <field name="sector_siren_id"/>
+                            <field name="ciiu_main"/>
+                            <field name="macro_sector_id"/>
+                            <field name="consumption_profile_id"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

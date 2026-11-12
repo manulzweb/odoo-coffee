@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_order_audit_log_view_list" model="ir.ui.view">
+        <field name="name">pos.order.audit.log.list</field>
+        <field name="model">pos.order.audit.log</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0">
+                <field name="date"/>
+                <field name="user_id"/>
+                <field name="action"/>
+                <field name="order_id"/>
+                <field name="reason"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="pos_order_audit_log_view_form" model="ir.ui.view">
+        <field name="name">pos.order.audit.log.form</field>
+        <field name="model">pos.order.audit.log</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" delete="0">
+                <sheet>
+                    <group>
+                        <field name="date"/>
+                        <field name="user_id"/>
+                        <field name="action"/>
+                        <field name="order_id"/>
+                        <field name="reason"/>
+                        <field name="detail"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_order_audit_log_action" model="ir.actions.act_window">
+        <field name="name">Devoluciones y correcciones</field>
+        <field name="res_model">pos.order.audit.log</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Decision A6: el gerente NO implica point_of_sale.group_pos_manager (daria
+         administracion de la caja y de la configuracion del POS). Por eso el menu
+         cuelga de la raiz del POS, visible para cualquier usuario POS, y se
+         restringe con groups; si estuviera bajo menu_point_rep (Informes) podria
+         quedar oculto para el gerente. TODO-VERIFICAR xmlid point_of_sale.menu_point_root. -->
+    <menuitem id="pos_order_audit_log_menu"
+              name="Devoluciones y correcciones"
+              parent="point_of_sale.menu_point_root"
+              action="pos_order_audit_log_action"
+              groups="pos_order_integrity.group_pos_store_manager,base.group_system"
+              sequence="90"/>
+</odoo>

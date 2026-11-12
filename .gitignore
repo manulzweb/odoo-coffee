@@ -1,0 +1,15 @@
+
+# Variables de entorno y secretos
+.env
+.env.*
+
+# Permitir el archivo de ejemplo
+!.env.example
+
+# Datos y respaldos
+*.sql
+*.dump
+*.backup
+backups/
+
+.venv/

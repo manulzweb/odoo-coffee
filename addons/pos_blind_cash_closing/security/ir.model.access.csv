@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_blind_cash_closing_manager,pos.blind.cash.closing manager,model_pos_blind_cash_closing,pos_order_integrity.group_pos_store_manager,1,0,0,0
+access_pos_blind_cash_closing_system,pos.blind.cash.closing system,model_pos_blind_cash_closing,base.group_system,1,0,0,0

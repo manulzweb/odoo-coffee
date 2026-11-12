@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- noupdate="1": se aplica al instalar y no se revierte en cada actualizacion
+     del modulo si el dueño cambia la precision a mano. -->
+<odoo noupdate="1">
+    <!-- Cantidades con 3 decimales para vender por peso (0,125 kg). Con los 2
+         decimales por defecto el ORM redondearia 0,125 a 0,13 sin avisar.
+         TODO-VERIFICAR: xmlid product.decimal_product_uom y que pos.order.line.qty
+         use la precision 'Product Unit of Measure'. -->
+    <record id="product.decimal_product_uom" model="decimal.precision">
+        <field name="digits">3</field>
+    </record>
+</odoo>

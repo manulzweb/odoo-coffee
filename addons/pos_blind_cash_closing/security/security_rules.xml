@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Reglas GLOBALES (sin grupos) de solo lectura. Se prefieren a reglas de
+        grupo porque estas se unen (OR) con cualquier regla de grupo ya
+        existente en point_of_sale y la anularian; una regla global se combina
+        con AND. Gerente de la cafeteria y administrador tecnico ven todo; todo
+        el resto de usuarios POS (group_pos_user, incluido un POS manager nativo sin el
+        grupo de gerente de la cafeteria) queda limitado. Usuarios sin ningun grupo
+        POS (p. ej. contabilidad) NO se ven afectados por estas reglas (alcance
+        acotado, M4); si un usuario de contabilidad no debe ver ventas, no darle
+        acceso a modelos pos.* ni a account.bank.statement.line.
+        EFECTOS COLATERALES a revisar en la prueba real: contadores y tableros
+        de pos.config (sesiones, ventas), pantallas de sesion/pedidos del backend
+        para usuarios POS no gerentes y busquedas de name_search de pos.order.
+
+        TODO-VERIFICAR (Odoo 18): que user.has_group(...) sea invocable dentro
+        de domain_force (safe_eval) y que la cache de reglas se invalide al
+        cambiar los grupos de un usuario (si no, reiniciar el servidor).
+        TODO-VERIFICAR: ids XML point_of_sale.model_pos_session, model_pos_order,
+        model_pos_order_line, model_pos_payment y
+        account.model_account_bank_statement_line.
+
+        Las reglas de pos.order/line/payment dejan ver solo pedidos en borrador
+        (la venta en curso) de la sesion abierta del propio cajero. Los pedidos
+        ya cobrados solo son legibles dentro de la ventana interna del servidor
+        (campo pos.session.pos_window), es decir, mientras Odoo procesa la
+        sincronizacion de una venta: nunca por una llamada RPC directa.
+    -->
+
+    <record id="rule_pos_session_blind" model="ir.rule">
+        <field name="name">Cierre ciego POS: el cajero solo ve su sesion abierta</field>
+        <field name="model_id" ref="point_of_sale.model_pos_session"/>
+        <field name="domain_force">[(1, '=', 1)] if (user.has_group('pos_order_integrity.group_pos_store_manager') or user.has_group('base.group_system') or not (user.has_group('point_of_sale.group_pos_user') or user.has_group('pos_order_integrity.group_cashier_restricted'))) else [('user_id', '=', user.id), ('state', 'in', ['opening_control', 'opened', 'closing_control'])]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_pos_order_blind" model="ir.rule">
+        <field name="name">Cierre ciego POS: el cajero solo ve la venta en curso</field>
+        <field name="model_id" ref="point_of_sale.model_pos_order"/>
+        <field name="domain_force">[(1, '=', 1)] if (user.has_group('pos_order_integrity.group_pos_store_manager') or user.has_group('base.group_system') or not (user.has_group('point_of_sale.group_pos_user') or user.has_group('pos_order_integrity.group_cashier_restricted'))) else [('session_id.user_id', '=', user.id), ('session_id.state', 'in', ['opening_control', 'opened', 'closing_control']), '|', ('state', '=', 'draft'), ('session_id.pos_window', '=', True)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_pos_order_line_blind" model="ir.rule">
+        <field name="name">Cierre ciego POS: lineas solo de la venta en curso</field>
+        <field name="model_id" ref="point_of_sale.model_pos_order_line"/>
+        <field name="domain_force">[(1, '=', 1)] if (user.has_group('pos_order_integrity.group_pos_store_manager') or user.has_group('base.group_system') or not (user.has_group('point_of_sale.group_pos_user') or user.has_group('pos_order_integrity.group_cashier_restricted'))) else [('order_id.session_id.user_id', '=', user.id), ('order_id.session_id.state', 'in', ['opening_control', 'opened', 'closing_control']), '|', ('order_id.state', '=', 'draft'), ('order_id.session_id.pos_window', '=', True)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_pos_payment_blind" model="ir.rule">
+        <field name="name">Cierre ciego POS: pagos solo de la venta en curso</field>
+        <field name="model_id" ref="point_of_sale.model_pos_payment"/>
+        <field name="domain_force">[(1, '=', 1)] if (user.has_group('pos_order_integrity.group_pos_store_manager') or user.has_group('base.group_system') or not (user.has_group('point_of_sale.group_pos_user') or user.has_group('pos_order_integrity.group_cashier_restricted'))) else [('pos_order_id.session_id.user_id', '=', user.id), ('pos_order_id.session_id.state', 'in', ['opening_control', 'opened', 'closing_control']), '|', ('pos_order_id.state', '=', 'draft'), ('pos_order_id.session_id.pos_window', '=', True)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_bank_statement_line_blind" model="ir.rule">
+        <field name="name">Cierre ciego POS: sin lectura de movimientos de caja de sesiones POS</field>
+        <field name="model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="domain_force">[(1, '=', 1)] if (user.has_group('pos_order_integrity.group_pos_store_manager') or user.has_group('base.group_system') or not (user.has_group('point_of_sale.group_pos_user') or user.has_group('pos_order_integrity.group_cashier_restricted'))) else [('pos_session_id', '=', False)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- noupdate="1": se aplica al instalar y no se revierte en cada actualizacion
+     del modulo si el dueño ajusta la balanza en la interfaz. -->
+<odoo noupdate="1">
+    <!-- Pesos de 0,001 kg (1 g). Con rounding 0.01 la interfaz del POS podria
+         redondear 0,125 kg a 0,13 kg. TODO-VERIFICAR: xmlid uom.product_uom_kgm y
+         que uom.uom conserve el campo rounding en Odoo 18. -->
+    <record id="uom.product_uom_kgm" model="uom.uom">
+        <field name="rounding">0.001</field>
+    </record>
+</odoo>

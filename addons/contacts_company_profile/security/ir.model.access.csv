@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_company_client_type_admin,access.company.client.type.admin,model_company_client_type,base.group_system,1,1,1,1
+access_company_size_admin,access.company.size.admin,model_company_size,base.group_system,1,1,1,1
+access_sector_siren_admin,access.sector.siren.admin,model_company_sector_siren,base.group_system,1,1,1,1
+access_macro_sector_admin,access.macro.sector.admin,model_company_macro_sector,base.group_system,1,1,1,1
+access_consumption_profile_admin,access.consumption.profile.admin,model_company_consumption_profile,base.group_system,1,1,1,1

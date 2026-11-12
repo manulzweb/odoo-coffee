@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- TODO-VERIFICAR: xmlid point_of_sale.group_pos_user en Odoo 18. -->
+    <record id="group_cashier_restricted" model="res.groups">
+        <field name="name">Punto de venta: cajero restringido</field>
+        <field name="implied_ids" eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+        <field name="comment">Cuenta de Odoo real del cajero (no un empleado por PIN). Sin derecho a cambiar precios, aplicar descuentos, devolver ni modificar o eliminar ventas confirmadas. Los controles de este módulo se aplican a todo usuario que no sea gerente ni administrador técnico, tenga o no este grupo.</field>
+    </record>
+
+    <record id="group_pos_store_manager" model="res.groups">
+        <field name="name">Punto de venta: gerente de tienda</field>
+        <field name="implied_ids" eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+        <field name="comment">Puede corregir y devolver ventas confirmadas (queda registro de autor y fecha) y ver/editar el costo manual de los productos. No asignar junto con el grupo de cajero ni compartir la cuenta con el cajero. No implica point_of_sale.group_pos_manager a propósito (evita dar administración de la caja). Sus accesos propios: auditoría y costo manual vía ACL de este módulo (product.template/product.product lectura, escritura y creación). Los reportes nativos del POS pueden requerir además group_pos_manager (TODO-VERIFICAR; decisión de Manuel).</field>
+    </record>
+</odoo>
