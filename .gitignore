@@ -1,15 +1,25 @@
-
-# Variables de entorno y secretos
+# Variables de entorno
 .env
 .env.*
-
-# Permitir el archivo de ejemplo
 !.env.example
 
-# Datos y respaldos
-*.sql
-*.dump
-*.backup
+# Python / Odoo
+__pycache__/
+*.pyc
+*.log
+
+# Docker / PostgreSQL
+postgres_data/
+odoo_data/
 backups/
 
-.venv/
+# Dependencias
+node_modules/
+
+# Credenciales
+*.pem
+*.key
+
+# IDE
+.vscode/
+.idea/
